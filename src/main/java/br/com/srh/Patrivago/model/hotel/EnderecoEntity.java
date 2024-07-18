@@ -1,4 +1,4 @@
-package br.com.srh.Patrivago.model;
+package br.com.srh.Patrivago.model.hotel;
 
 import lombok.*;
 

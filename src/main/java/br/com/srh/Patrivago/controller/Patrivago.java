@@ -1,13 +1,13 @@
-package br.com.srh.Patrivago;
+package br.com.srh.Patrivago.controller;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PatrivagoApplication {
+public class Patrivago {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PatrivagoApplication.class, args);
+		SpringApplication.run(Patrivago.class, args);
 
 
 	}
