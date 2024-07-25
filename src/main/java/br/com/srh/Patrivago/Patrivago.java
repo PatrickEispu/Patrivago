@@ -1,5 +1,7 @@
-package br.com.srh.Patrivago.controller;
+package br.com.srh.Patrivago;
 
+import br.com.srh.Patrivago.model.conta.ContaClienteEntity;
+import br.com.srh.Patrivago.model.conta.ContaEntity;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

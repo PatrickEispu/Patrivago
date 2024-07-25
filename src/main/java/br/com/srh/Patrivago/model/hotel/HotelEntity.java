@@ -15,8 +15,10 @@ public class HotelEntity implements Serializable {
     private String nome;
     private Integer qtdeQuarto;
     private Integer qtdeQuartoDisponivel;
-    private QuartoEntity quarto;
-    private ContaEntity conta;
+    private EnderecoEntity endereco;
+    private String hotelEmail;
+//    private QuartoEntity quarto;
+//    private ContaEntity conta;
 
 
 }

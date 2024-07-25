@@ -13,9 +13,10 @@ import java.time.LocalDate;
 public class ReservaEntity implements Serializable {
     private Integer idReserva;
     private String nomeHotel;
-    private Integer quartoNum;
-    private LocalDate checkIn;
-    private LocalDate checkOut;
+    private String nomeCliente;
+    private String checkOut;
+    private String checkIn;
     private ContaEntity conta;
-
+    private String hotelEmail;
+    //private Integer quartoNum;
 }

@@ -13,5 +13,6 @@ public class QuartoEntity implements Serializable {
 
     private Integer idQuarto;
     private Integer quartoNum;
-    private HotelEntity hotel;
+    private Integer quartoStatus;
+    private Integer idHotel;
 }

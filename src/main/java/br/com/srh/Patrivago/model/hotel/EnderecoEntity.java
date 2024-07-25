@@ -2,12 +2,13 @@ package br.com.srh.Patrivago.model.hotel;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 @Builder(toBuilder = true)
-public class EnderecoEntity {
+public class EnderecoEntity implements Serializable {
     private Integer idEndereco;
     private String cep;
     private String rua;
