@@ -24,7 +24,6 @@ public class ReservaService {
                 .checkOut(reservaRequest.getCheckOut())
                 .build();
         ReservaEntity reservaSalva = reservaRepository.saveReserva(reserva,cpf);
-//TODO verificar porque os valores estão nulos na repository
         return mapearReserva(reservaSalva);
 
 
