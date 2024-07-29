@@ -36,5 +36,7 @@ public class HotelController {
         }
     }
 
+    //TODO fazer listagem de hotel (lista geral, por nome e estado) e update hotel
+
 
 }

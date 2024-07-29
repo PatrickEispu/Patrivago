@@ -1,22 +1,24 @@
 package br.com.srh.Patrivago.usecase;
 
 import br.com.srh.Patrivago.dao.conta.ContaRepository;
+import br.com.srh.Patrivago.dto.ContaClienteResponse;
 import br.com.srh.Patrivago.dto.ContaRequest;
 import br.com.srh.Patrivago.dto.ContaResponse;
 import br.com.srh.Patrivago.enuns.TipoContaEnum;
 import br.com.srh.Patrivago.model.conta.ContaClienteEntity;
 import br.com.srh.Patrivago.model.conta.ContaEmpresaEntity;
-import br.com.srh.Patrivago.model.conta.ContaEntity;
+import br.com.srh.Patrivago.util.UtilsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Service
 public class ContaService {
     @Autowired
     ContaRepository contaRepository;
-
 
     public ContaResponse addConta(ContaRequest contaRequest) {
         if (contaRequest.getTipoConta() == TipoContaEnum.CLIENTE) {
@@ -54,7 +56,7 @@ public class ContaService {
                 .nome(contaRequest.getNome())
                 .senha(contaRequest.getSenha())
                 .email(contaRequest.getEmail())
-                .tipoConta(contaRequest.getTipoConta())
+               .tipoConta(contaRequest.getTipoConta())
                 .cnpj(contaRequest.getCnpj())
                 .build();
 
@@ -63,14 +65,14 @@ public class ContaService {
 
     }
 
-    private static ContaResponse mapearContaCliente(ContaClienteEntity contaClienteSalva) {
+    private static ContaClienteResponse mapearContaCliente(ContaClienteEntity contaClienteSalva) {
 
-        return ContaResponse.builder()
+        return ContaClienteResponse.builder()
                 .nome(contaClienteSalva.getNome())
-                .senha(contaClienteSalva.getSenha())
+              //  .senha(contaClienteSalva.getSenha())
                 .email(contaClienteSalva.getEmail())
-                .tipoConta(contaClienteSalva.getTipoConta())
-                .cpf(contaClienteSalva.getCpf())
+               // .tipoConta(contaClienteSalva.getTipoConta())
+               // .cpf(contaClienteSalva.getCpf())
                 .build();
 
     }
@@ -79,40 +81,36 @@ public class ContaService {
 
         return ContaResponse.builder()
                 .nome(contaEmpresaSalva.getNome())
-                .senha(contaEmpresaSalva.getSenha())
+            //    .senha(contaEmpresaSalva.getSenha())
                 .email(contaEmpresaSalva.getEmail())
-                .tipoConta(contaEmpresaSalva.getTipoConta())
-                .cnpj(contaEmpresaSalva.getCnpj())
+              //  .tipoConta(contaEmpresaSalva.getTipoConta())
+               // .cnpj(contaEmpresaSalva.getCnpj())
                 .build();
     }
 
-//    public ContaResponse loginConta(ContaRequest contaRequest) {
-//        if (contaRepository.loginCheck(contaRequest)) {
-//            Long idConta = contaRepository.getContaId(contaRequest);
-//            if (checkTipoConta(idConta) == TipoContaEnum.CLIENTE) {
-//                ContaClienteEntity contaCliente = contaRepository.getContaCliente(idConta);
-//                return mapearContaCliente(contaCliente);
-//
-//            } else {
-//                ContaEmpresaEntity contaEmpresa = contaRepository.getContaEmpresa(idConta);
-//                return mapearContaEmpresa(contaEmpresa);
-//            }
-//
-//        }
-//        else
-//        {
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"EMAIL ou SENHA incorreto!");
-//        }
-//    }
+    public List<ContaResponse> getAllContaList() {
+        return contaRepository.getAllContaList();
+    }
 
-//    public TipoContaEnum checkTipoConta(Long idConta) {
-//        Integer idTipoConta = contaRepository.getTipoConta(idConta);
-//        if (idTipoConta == 1) {
-//            return TipoContaEnum.CLIENTE;
-//        } else {
-//            return TipoContaEnum.EMPRESA;
-//        }
-//    }
 
+    public List<ContaClienteResponse> getAllClienteList() {
+        return contaRepository.getAllClienteList();
+    }
+
+    public List<ContaClienteResponse> getClienteList(String cpf) {
+        return contaRepository.getClienteList(cpf);
+    }
+
+    public ContaClienteResponse updateContaCliente(ContaRequest contaRequest, String cpf) {
+       ContaClienteEntity contaSalva = contaRepository.getClienteInfo(cpf);
+       contaSalva.setNome(contaRequest.getNome());
+       contaSalva.setEmail(contaRequest.getEmail());
+       contaSalva.setCpf(contaRequest.getCpf());
+       contaSalva.setSenha(contaRequest.getSenha());
+
+       ContaClienteEntity contaAtualizada = contaRepository.updateCliente(contaSalva,cpf);
+       return mapearContaCliente(contaAtualizada);
+
+    }
 }
 

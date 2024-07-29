@@ -29,4 +29,6 @@ public class ReservaController {
 
        }
     }
+
+    //TODO fazer listagem de reservas (por conta cliente e por hotel) e fazer update de reserva(checkin e checkout)
 }
