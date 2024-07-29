@@ -2,6 +2,7 @@ package br.com.srh.Patrivago.usecase;
 
 import br.com.srh.Patrivago.dao.conta.ContaRepository;
 import br.com.srh.Patrivago.dto.ContaClienteResponse;
+import br.com.srh.Patrivago.dto.ContaEmpresaResponse;
 import br.com.srh.Patrivago.dto.ContaRequest;
 import br.com.srh.Patrivago.dto.ContaResponse;
 import br.com.srh.Patrivago.enuns.TipoContaEnum;
@@ -77,9 +78,9 @@ public class ContaService {
 
     }
 
-    private static ContaResponse mapearContaEmpresa(ContaEmpresaEntity contaEmpresaSalva) {
+    private static ContaEmpresaResponse mapearContaEmpresa(ContaEmpresaEntity contaEmpresaSalva) {
 
-        return ContaResponse.builder()
+        return ContaEmpresaResponse.builder()
                 .nome(contaEmpresaSalva.getNome())
             //    .senha(contaEmpresaSalva.getSenha())
                 .email(contaEmpresaSalva.getEmail())
@@ -111,6 +112,26 @@ public class ContaService {
        ContaClienteEntity contaAtualizada = contaRepository.updateCliente(contaSalva,cpf);
        return mapearContaCliente(contaAtualizada);
 
+    }
+
+    public List<ContaEmpresaResponse> getAllEmpresaList() {
+        return contaRepository.getAllEmpresaList();
+    }
+
+    public List<ContaEmpresaResponse> getEmpresaList(String cnpj) {
+        return contaRepository.getEmpresaList(cnpj);
+    }
+
+    public ContaEmpresaResponse updateContaEmpresa(ContaRequest contaRequest, String cnpj) {
+        ContaEmpresaEntity contaSalva = contaRepository.getEmpresaInfo(cnpj);
+        contaSalva.setNome(contaRequest.getNome());
+        contaSalva.setEmail(contaRequest.getEmail());
+        contaSalva.setCnpj(contaRequest.getCnpj());
+        contaSalva.setSenha(contaRequest.getSenha());
+
+        ContaEmpresaEntity contaAtualizada = contaRepository.updateEmpresa(contaSalva,cnpj);
+
+        return mapearContaEmpresa(contaAtualizada);
     }
 }
 
