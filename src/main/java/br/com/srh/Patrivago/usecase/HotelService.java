@@ -12,6 +12,7 @@ import br.com.srh.Patrivago.model.hotel.HotelEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -54,4 +55,24 @@ public class HotelService {
     }
 
 
+    public List<HotelResponse> getALlHotel() {
+      return hotelRepository.getAllHotel();
+    }
+
+    public List<HotelResponse> getHotel(String nomeHotel) {
+       return hotelRepository.getHotel(nomeHotel);
+    }
+
+    public HotelResponse updateHotel(HotelRequest hotelRequest, String cnpj, Long idHotel) {
+       HotelEntity hotelSalvo = hotelRepository.getHotelInfo(cnpj,idHotel);
+
+       hotelSalvo.setNome(hotelRequest.getNome());
+       hotelSalvo.setHotelEmail(hotelRequest.getHotelEmail());
+       hotelSalvo.setQtdeQuarto(hotelRequest.getQtdeQuarto());
+       hotelSalvo.setQtdeQuartoDisponivel(hotelSalvo.getQtdeQuarto());
+
+       HotelEntity hotelAtualizado = hotelRepository.updateHotel(hotelSalvo,idHotel);
+       return mapearHotel(hotelAtualizado);
+
+    }
 }

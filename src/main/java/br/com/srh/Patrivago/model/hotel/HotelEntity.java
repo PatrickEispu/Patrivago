@@ -11,7 +11,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder(toBuilder = true)
 public class HotelEntity implements Serializable {
-    private Integer idHotel;
+    private Long idHotel;
     private String nome;
     private Integer qtdeQuarto;
     private Integer qtdeQuartoDisponivel;

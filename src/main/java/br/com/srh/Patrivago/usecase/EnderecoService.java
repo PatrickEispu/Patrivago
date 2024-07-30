@@ -4,11 +4,15 @@ import br.com.srh.Patrivago.dao.hotel.EnderecoRepository;
 import br.com.srh.Patrivago.dto.ContaRequest;
 import br.com.srh.Patrivago.dto.EnderecoResponse;
 import br.com.srh.Patrivago.dto.HotelRequest;
+import br.com.srh.Patrivago.dto.HotelResponse;
 import br.com.srh.Patrivago.model.conta.ContaEmpresaEntity;
 import br.com.srh.Patrivago.model.hotel.EnderecoEntity;
 import br.com.srh.Patrivago.model.hotel.HotelEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class EnderecoService {
@@ -37,4 +41,7 @@ public class EnderecoService {
                 .uf(enderecoSalvo.getUf())
                 .build();
     }
+
+
+
 }

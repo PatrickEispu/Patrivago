@@ -12,7 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder(toBuilder = true)
 public class HotelResponse {
-    private Integer idHotel;
+    private Long idHotel;
     private String nome;
     private Integer qtdeQuarto;
     private Integer qtdeQuartoDisponivel;
@@ -20,4 +20,5 @@ public class HotelResponse {
    // private ContaEntity conta;
     private EnderecoEntity endereco;
     private String hotelEmail;
+    private Long fkIdContaEmpresa;
 }

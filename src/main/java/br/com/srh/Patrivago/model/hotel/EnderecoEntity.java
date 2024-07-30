@@ -1,5 +1,6 @@
 package br.com.srh.Patrivago.model.hotel;
 
+import br.com.srh.Patrivago.usecase.HotelService;
 import lombok.*;
 
 import java.io.Serializable;
@@ -9,11 +10,12 @@ import java.io.Serializable;
 @Data
 @Builder(toBuilder = true)
 public class EnderecoEntity implements Serializable {
-    private Integer idEndereco;
+    private Long idEndereco;
     private String cep;
     private String rua;
     private String numero;
     private String uf;
-    private Integer fkIdHotel;
+    private Long fkIdHotel;
+    private HotelEntity hotel;
 
 }

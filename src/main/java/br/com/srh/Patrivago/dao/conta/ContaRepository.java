@@ -161,4 +161,9 @@ public class ContaRepository {
         jdbcTemplate.update(sqlContaEmpresa,contaSalva.getCnpj(),cnpj);
         return contaSalva;
     }
+
+    public Long getIdCliente(String cpf) {
+        String sqlIdCliente = ("SELECT id_conta_cliente FROM conta_cliente WHERE cpf = ?");
+        return jdbcTemplate.queryForObject(sqlIdCliente, Long.class,cpf);
+    }
 }

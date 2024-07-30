@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Builder(toBuilder = true)
 public class ReservaResponse {
 
-    private Integer idReserva;
+    private Long idReserva;
     private String nomeHotel;
     private String nomeCliente;
     //private Integer quartoNum;

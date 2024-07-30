@@ -7,12 +7,17 @@ import br.com.srh.Patrivago.model.reserva.ReservaEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ReservaService {
     @Autowired
     ReservaRepository reservaRepository;
     @Autowired
     HotelService hotelService;
+    @Autowired
+    ContaService contaService;
+
 
     public ReservaResponse addReserva(ReservaRequest reservaRequest,String cpf) {
 
@@ -37,5 +42,26 @@ public class ReservaService {
                 .checkIn(reservaSalva.getCheckIn())
                 .checkOut(reservaSalva.getCheckOut())
                 .build();
+    }
+
+    public List<ReservaResponse> geClienteReserva(String cpf) {
+       Long idCliente = contaService.getIdCliente(cpf);
+        return reservaRepository.getClienteReserva(idCliente);
+    }
+
+    public List<ReservaResponse> getHotelReserva(Long idHotel) {
+        return reservaRepository.getHotelReserva(idHotel);
+    }
+
+    public ReservaResponse updateReserva(ReservaRequest reservaRequest,String cpf, Long idReserva) {
+        Long idCliente = contaService.getIdCliente(cpf);
+
+        ReservaEntity reservaSalva = reservaRepository.getReservaInfo(idCliente,idReserva);
+        reservaSalva.setCheckIn(reservaRequest.getCheckIn());
+        reservaSalva.setCheckOut(reservaRequest.getCheckOut());
+
+        ReservaEntity reservaAtualizada = reservaRepository.updateReserva(reservaSalva, idReserva);
+
+        return mapearReserva(reservaAtualizada);
     }
 }

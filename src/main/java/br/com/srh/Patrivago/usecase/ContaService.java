@@ -8,7 +8,6 @@ import br.com.srh.Patrivago.dto.ContaResponse;
 import br.com.srh.Patrivago.enuns.TipoContaEnum;
 import br.com.srh.Patrivago.model.conta.ContaClienteEntity;
 import br.com.srh.Patrivago.model.conta.ContaEmpresaEntity;
-import br.com.srh.Patrivago.util.UtilsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -132,6 +131,10 @@ public class ContaService {
         ContaEmpresaEntity contaAtualizada = contaRepository.updateEmpresa(contaSalva,cnpj);
 
         return mapearContaEmpresa(contaAtualizada);
+    }
+
+    public Long getIdCliente(String cpf) {
+       return contaRepository.getIdCliente(cpf);
     }
 }
 

@@ -14,5 +14,5 @@ public class EnderecoResponse {
     private String rua;
     private String numero;
     private String uf;
-
+    private Long fkIdHotel;
 }

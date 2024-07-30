@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder(toBuilder = true)
 public class ReservaEntity implements Serializable {
-    private Integer idReserva;
+    private Long idReserva;
     private String nomeHotel;
     private String nomeCliente;
     private String checkOut;
