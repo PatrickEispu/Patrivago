@@ -1,13 +1,8 @@
 package br.com.srh.Patrivago.model.conta;
 
 
-import br.com.srh.Patrivago.enuns.TipoContaEnum;
-import br.com.srh.Patrivago.model.hotel.HotelEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
-import java.io.Serializable;
-import java.util.HashMap;
 
 @Data
 @AllArgsConstructor
@@ -15,7 +10,7 @@ import java.util.HashMap;
 @SuperBuilder
 public class ContaEmpresaEntity extends ContaEntity {
     private Long idContaEmpresa;
-    private Long fkIdConta;
+    private Long idConta;
     private String cnpj;
 
 //    @Builder(toBuilder = true)

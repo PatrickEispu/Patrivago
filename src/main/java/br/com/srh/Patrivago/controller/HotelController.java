@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/conta")
+@RequestMapping("/conta/hotel")
 
 @RestController
 public class HotelController {
@@ -36,7 +36,6 @@ public class HotelController {
         }
     }
 
-    //TODO fazer listagem de hotel (lista geral, por nome e estado) e update hotel
 
     //Listagem de todos os hoteis
     @GetMapping("/getAllHotel")

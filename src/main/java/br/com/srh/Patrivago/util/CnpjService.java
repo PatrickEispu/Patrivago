@@ -10,7 +10,7 @@ public class CnpjService {
 //        }
 //    }
 
-    private boolean isValidCNPJ(String cnpj) {
+    public boolean isValidCNPJ(String cnpj) {
         // Remove caracteres não numéricos
         cnpj = cnpj.replaceAll("\\D", "");
 
@@ -69,4 +69,4 @@ public class CnpjService {
         return (dig13 == cnpj.charAt(12)) && (dig14 == cnpj.charAt(13));
     }
 }
-}
+

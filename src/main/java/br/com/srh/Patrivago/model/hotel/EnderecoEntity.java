@@ -1,6 +1,5 @@
 package br.com.srh.Patrivago.model.hotel;
 
-import br.com.srh.Patrivago.usecase.HotelService;
 import lombok.*;
 
 import java.io.Serializable;
@@ -15,7 +14,7 @@ public class EnderecoEntity implements Serializable {
     private String rua;
     private String numero;
     private String uf;
-    private Long fkIdHotel;
+    private Long idHotel;
     private HotelEntity hotel;
 
 }

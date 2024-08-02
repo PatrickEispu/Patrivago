@@ -1,18 +1,12 @@
 package br.com.srh.Patrivago.usecase;
 
-import br.com.srh.Patrivago.dao.conta.ContaEmpresaRepository;
 import br.com.srh.Patrivago.dao.hotel.HotelRepository;
-import br.com.srh.Patrivago.dto.ContaRequest;
-import br.com.srh.Patrivago.dto.EnderecoResponse;
 import br.com.srh.Patrivago.dto.HotelRequest;
 import br.com.srh.Patrivago.dto.HotelResponse;
-import br.com.srh.Patrivago.model.conta.ContaEmpresaEntity;
-import br.com.srh.Patrivago.model.hotel.EnderecoEntity;
 import br.com.srh.Patrivago.model.hotel.HotelEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -33,7 +27,7 @@ public class HotelService {
         HotelEntity hotel = HotelEntity.builder()
                 .nome(hotelRequest.getNome())
                 .qtdeQuarto(hotelRequest.getQtdeQuarto())
-                .qtdeQuartoDisponivel(hotelRequest.getQtdeQuartoDisponivel())
+                .qtdeQuartoDisponivel(hotelRequest.getQtdeQuarto())
                 .endereco(hotelRequest.getEndereco())
                 .hotelEmail(hotelRequest.getHotelEmail())
                 .build();
@@ -74,5 +68,46 @@ public class HotelService {
        HotelEntity hotelAtualizado = hotelRepository.updateHotel(hotelSalvo,idHotel);
        return mapearHotel(hotelAtualizado);
 
+    }
+
+    public boolean hotelExist(String name) {
+        return hotelRepository.getHotelName(name);
+    }
+
+    public boolean hotelEmailExist(String hotelEmail) {
+        return hotelRepository.hotelEmailExist(hotelEmail);
+    }
+
+    public boolean hotelEmailCheck(String hotelEmail, String nomeHotel) {
+        Integer hotelEmailCheck= hotelRepository.hotelEmailCheck(hotelEmail,nomeHotel);
+        
+        if (hotelEmailCheck!=null && hotelEmailCheck>0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public boolean quartoDisponivelCheck(String hotelEmail) {
+       Integer qtdeQuartoDisponivel=hotelRepository.quartoDisponivelCheck(hotelEmail);
+        if (qtdeQuartoDisponivel>0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void blockRoom(String hotelEmail) {
+        hotelRepository.blockRoom(hotelEmail);
+    }
+
+    public void clearRoom(Long idReserva) {
+        hotelRepository.clearRoom(idReserva);
     }
 }

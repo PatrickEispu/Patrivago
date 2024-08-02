@@ -13,8 +13,8 @@ import java.io.Serializable;
 //@Builder(toBuilder = true)
 @SuperBuilder
 public class ContaEntity implements Serializable {
-    private String idConta;
-    private String fkIdTipoConta;
+    private Long idConta;
+    private Integer idTipoConta;
     private String nome;
     private String email;
     private String senha;

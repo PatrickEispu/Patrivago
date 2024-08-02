@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/conta/")
+@RequestMapping("/conta/reserva")
 @RestController
 public class ReservaController {
     @Autowired
@@ -33,7 +33,6 @@ public class ReservaController {
        }
     }
 
-    //TODO fazer listagem de reservas (por conta cliente e por hotel) e fazer update de reserva(checkin e checkout)
 
     //Listagem de todas a reservas de um cliente
     @GetMapping("/{cpf}/getClienteReserva")
@@ -48,6 +47,25 @@ public class ReservaController {
     {
         return reservaService.getHotelReserva(idHotel);
     }
+
+    //Ativar checkin de cliente
+    @PutMapping("/{idReserva}/ativarCheckin")
+    public ResponseEntity<String> ativarCheckin(@PathVariable("idReserva")Long idReserva)
+    {
+        reservaService.ativarCheckin(idReserva);
+        return new ResponseEntity<>("Check-in feito com sucesso!",HttpStatus.OK);
+    }
+
+    //Ativar checkout de cliente
+    @PutMapping("/{idReserva}/ativarCheckout")
+    public ResponseEntity<String> ativarCheckout(@PathVariable("idReserva")Long idReserva)
+    {
+         reservaService.ativarCheckout(idReserva);
+        return new ResponseEntity<>("Check-out feito com sucesso!",HttpStatus.OK);
+    }
+
+
+
 
     //Update de reserva (check in e check out)
     @PutMapping("/{cpf}/{idReserva}/updateReserva")

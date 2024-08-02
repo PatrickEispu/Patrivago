@@ -166,4 +166,56 @@ public class ContaRepository {
         String sqlIdCliente = ("SELECT id_conta_cliente FROM conta_cliente WHERE cpf = ?");
         return jdbcTemplate.queryForObject(sqlIdCliente, Long.class,cpf);
     }
+
+    public boolean clienteCpfExist(String cpf) {
+        String sql = ("SELECT COUNT(*) FROM conta_cliente WHERE cpf = ?");
+        Integer cpfExist = jdbcTemplate.queryForObject(sql, Integer.class,cpf);
+        if (cpfExist!=null && cpfExist>0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public boolean empresaCnpjExist(String cnpj) {
+        String sql = ("SELECT COUNT(*) FROM conta_empresa WHERE cnpj = ?");
+        Integer cnpjExist = jdbcTemplate.queryForObject(sql, Integer.class,cnpj);
+        if (cnpjExist!=null && cnpjExist>0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public boolean emailExist(String email) {
+        String sql = ("SELECT COUNT(*) FROM conta WHERE email = ?");
+        Integer emailExist = jdbcTemplate.queryForObject(sql, Integer.class,email);
+        if (emailExist!=null && emailExist>0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+    public String getClienteEmail(String cpf) {
+        String sql=("SELECT email FROM conta INNER JOIN conta_cliente ON conta.id_conta = conta_cliente.id_conta_cliente WHERE cpf = ?");
+        return jdbcTemplate.queryForObject(sql, String.class,cpf);
+
+    }
+
+    public String getEmpresaEmail(String cnpj) {
+        String sql=("SELECT email FROM conta INNER JOIN conta_empresa ON conta.id_conta = conta_empresa.id_conta_empresa WHERE cnpj = ?");
+        return jdbcTemplate.queryForObject(sql, String.class,cnpj);
+
+    }
 }

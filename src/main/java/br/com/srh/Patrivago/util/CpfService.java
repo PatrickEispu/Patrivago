@@ -1,17 +1,19 @@
 package br.com.srh.Patrivago.util;
 
+import br.com.srh.Patrivago.constante.ErrorMessage;
+import br.com.srh.Patrivago.exception.CpfException;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CpfService {
 
-//    public void validarCpf(String cpf) {
-//        if (cpf == null || !isValidCPF(cpf)) {
-//            throw new CpfInvalidoException(ErrorCode.CPF_INVALIDO.getCustomMessage() + cpf);
-//        }
-//    }
+    public void validarCpf(String cpf) throws CpfException {
+        if (cpf == null || !isValidCPF(cpf)) {
+            throw new CpfException(ErrorMessage.CPF_INVALIDO + cpf);
+        }
+    }
 
-    private boolean isValidCPF(String cpf) {
+    public boolean isValidCPF(String cpf) {
         // Remover caracteres não numéricos
         cpf = cpf.replaceAll("[^\\d]", "");
 

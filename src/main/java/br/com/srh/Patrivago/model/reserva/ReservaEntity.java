@@ -18,5 +18,5 @@ public class ReservaEntity implements Serializable {
     private String checkIn;
     private ContaEntity conta;
     private String hotelEmail;
-    //private Integer quartoNum;
+    private Integer idReservaStatus;
 }

@@ -1,9 +1,7 @@
 package br.com.srh.Patrivago.dto;
 
 
-import br.com.srh.Patrivago.model.conta.ContaEntity;
 import br.com.srh.Patrivago.model.hotel.EnderecoEntity;
-import br.com.srh.Patrivago.model.hotel.QuartoEntity;
 import lombok.*;
 
 @Getter
