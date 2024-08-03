@@ -13,8 +13,9 @@ public class EnderecoEntity implements Serializable {
     private String cep;
     private String rua;
     private String numero;
+    private String cidade;
     private String uf;
     private Long idHotel;
-    private HotelEntity hotel;
+    //private HotelEntity hotel;
 
 }

@@ -19,18 +19,14 @@ public class HotelRepository {
     JdbcTemplate jdbcTemplate;
 
     public HotelEntity saveHotel(HotelEntity hotel, String cnpj) {
-        try {
             String sqlIdEmpresa = "SELECT id_conta_empresa FROM conta_empresa WHERE cnpj = ?";
             Long idEmpresa = jdbcTemplate.queryForObject(sqlIdEmpresa, Long.class, cnpj);
 
             String sql = "INSERT INTO hotel (nome, qtde_quarto, qtde_quarto_disponivel, hotel_email,id_conta_empresa) VALUES (?, ?, ?, ?,?)";
             jdbcTemplate.update(sql, hotel.getNome(), hotel.getQtdeQuarto(), hotel.getQtdeQuartoDisponivel(), hotel.getHotelEmail(), idEmpresa);
 
-            System.out.println("Hotel inserido com sucesso!");
 
-        } catch (Exception e) {
-            System.out.println("Erro ao inserir hotel: " + e);
-        }
+
         return hotel;
     }
 
@@ -77,6 +73,7 @@ public class HotelRepository {
             endereco.setCep(rs.getString("cep"));
             endereco.setRua(rs.getString("rua"));
             endereco.setNumero(rs.getString("numero"));
+            endereco.setCidade(rs.getString("cidade"));
             endereco.setUf(rs.getString("uf"));
             endereco.setIdHotel(rs.getLong("id_hotel"));
 
@@ -160,5 +157,31 @@ public class HotelRepository {
     public void clearRoom(Long idReserva) {
         String sql=("UPDATE hotel SET qtde_quarto_disponivel = qtde_quarto_disponivel+1  WHERE id_reserva = ?");
         jdbcTemplate.update(sql,idReserva);
+    }
+
+    public Integer getQtdeQuartos(Long idHotel) {
+        String sql=("SELECT qtde_quartos FROM hotel WHERE id_hotel = ?");
+        return jdbcTemplate.queryForObject(sql, Integer.class,idHotel);
+    }
+
+    public Integer getQtdeQuartoDisponivel(Long idHotel) {
+        String sql=("SELECT qtde_quarto_disponivel FROM hotel WHERE id_hotel = ?");
+        return jdbcTemplate.queryForObject(sql, Integer.class,idHotel);
+
+    }
+
+    public Integer getHotel(Long idHotel) {
+        String sql = ("SELECT COUNT(*) FROM hotel WHERE id_hotel = ? ");
+        return jdbcTemplate.queryForObject(sql, Integer.class,idHotel);
+    }
+
+    public Integer hotelAndEmpresaCheck(String cnpj, Long idHotel) {
+        String sql=("SELECT count(*) " +
+                "FROM hotel " +
+                "INNER JOIN conta_empresa \n" +
+                "ON hotel.id_conta_empresa = conta_empresa.id_conta_empresa  " +
+                "WHERE id_hotel = ? AND cnpj = ?");
+
+        return jdbcTemplate.queryForObject(sql, Integer.class,idHotel,cnpj);
     }
 }

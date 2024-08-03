@@ -12,7 +12,7 @@ public class CnpjService {
 
     public boolean isValidCNPJ(String cnpj) {
         // Remove caracteres não numéricos
-        cnpj = cnpj.replaceAll("\\D", "");
+        cnpj = cnpj.replaceAll("[^\\d]", "");
 
         // Verifica se o CNPJ tem 14 dígitos
         if (cnpj.length() != 14) {

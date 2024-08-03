@@ -108,5 +108,20 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     private ResponseEntity<String> nullPointerHandler(NullPointerException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorMessage.CAMPO_VAZIO);
     }
-
+    @ExceptionHandler(CepFormatoException.class)
+    private ResponseEntity<String> cepFormatoHandler(CepFormatoException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorMessage.CEP_INVALIDO);
+    }
+    @ExceptionHandler(CepDontExistException.class)
+    private ResponseEntity<String> cepDontExistHandler(CepDontExistException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorMessage.CEP_INEXISTENTE);
+    }
+    @ExceptionHandler(HotelCantUpdateExcpetion.class)
+    private ResponseEntity<String> hotelCantUpdateHandler(HotelCantUpdateExcpetion exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorMessage.HOTEL_UPDATE_NEGADO);
+    }
+    @ExceptionHandler(HotelMismatchExcpetion.class)
+    private ResponseEntity<String> hotelMismatchHandler(HotelMismatchExcpetion exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorMessage.HOTEL_INCORRETO);
+    }
 }

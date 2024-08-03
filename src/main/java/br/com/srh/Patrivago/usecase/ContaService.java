@@ -50,24 +50,18 @@ public class ContaService {
 
     private void contaRequestNullCheck(ContaRequest contaRequest) {
         if (
-                contaRequest.getNome()==null ||
-                contaRequest.getTipoConta()==null ||
-                contaRequest.getSenha()==null ||
-                contaRequest.getEmail()==null)
-        {
+                contaRequest.getNome() == null ||
+                        contaRequest.getTipoConta() == null ||
+                        contaRequest.getSenha() == null ||
+                        contaRequest.getEmail() == null) {
             throw new NullPointerException();
         }
-        if (contaRequest.getTipoConta()==TipoContaEnum.CLIENTE)
-        {
-            if (contaRequest.getCpf()==null)
-            {
+        if (contaRequest.getTipoConta() == TipoContaEnum.CLIENTE) {
+            if (contaRequest.getCpf() == null) {
                 throw new NullPointerException();
             }
-        }
-        else
-        {
-            if (contaRequest.getCnpj()==null)
-            {
+        } else {
+            if (contaRequest.getCnpj() == null) {
                 throw new NullPointerException();
             }
         }
@@ -118,68 +112,85 @@ public class ContaService {
     }
 
     private void contaClienteCheckUpdateRequest(ContaRequest contaRequest, String cpf) {
+        if (
+                contaRequest.getNome() == null ||
+                contaRequest.getEmail() == null ||
+                contaRequest.getSenha() == null ||
+                contaRequest.getCpf() == null)
+        {
+            throw new NullPointerException();
+        }
 
-        if (contaRequest.getNome() != null && !nomeService.isValidName(contaRequest.getNome())) {
+        if (!nomeService.isValidName(contaRequest.getNome())) {
             throw new NomeException();
         }
 
-        if (cpfService.isValidCPF(cpf)) {
+        if (!cpfService.isValidCPF(cpf)) {
             throw new CpfException();
         }
         if (!clienteCpfExist(cpf)) {
             throw new CpfDontExistException();
         }
 
-        if (contaRequest.getCpf() != null && !cpfService.isValidCPF(contaRequest.getCpf())) {
+        if (!cpfService.isValidCPF(contaRequest.getCpf())) {
             throw new CpfException();
         }
-        if (contaRequest.getCpf() != null && clienteCpfExist(contaRequest.getCpf()) && !contaRequest.getCpf().equals(cpf)) {
+        if (clienteCpfExist(contaRequest.getCpf()) && !contaRequest.getCpf().equals(cpf)) {
             throw new CpfExistException();
         }
 
-        if (contaRequest.getEmail() != null && !emailService.isValidEmail(contaRequest.getEmail())) {
+        if (!emailService.isValidEmail(contaRequest.getEmail())) {
             throw new EmailException();
         }
         String clienteEmail = contaRepository.getClienteEmail(cpf);
-        if (contaRequest.getEmail() != null && emailExist(contaRequest) && !contaRequest.getEmail().equals(clienteEmail)) {
+        if (emailExist(contaRequest) && !contaRequest.getEmail().equals(clienteEmail)) {
             throw new EmailExistException();
         }
 
 
-        if (contaRequest.getSenha() != null && !senhaService.isSenhaValid(contaRequest.getSenha())) {
+        if (!senhaService.isSenhaValid(contaRequest.getSenha())) {
             throw new SenhaException();
         }
     }
 
     private void contaEmpresaCheckUpdateRequest(ContaRequest contaRequest, String cnpj) {
 
-        if (contaRequest.getNome() != null && !nomeService.isValidName(contaRequest.getNome())) {
+        if (
+                        contaRequest.getNome() == null ||
+                        contaRequest.getEmail() == null ||
+                        contaRequest.getSenha() == null ||
+                        contaRequest.getCnpj() == null)
+        {
+            throw new NullPointerException();
+        }
+
+        if (!nomeService.isValidName(contaRequest.getNome())) {
             throw new NomeException();
         }
 
-        if (cnpjService.isValidCNPJ(cnpj)) {
-            throw new CpfException();
+        if (!cnpjService.isValidCNPJ(cnpj)) {
+            throw new CnpjException();
         }
         if (!empresaCnpjExist(cnpj)) {
             throw new CpfDontExistException();
         }
 
-        if (contaRequest.getCnpj() != null && !cnpjService.isValidCNPJ(contaRequest.getCnpj())) {
+        if (!cnpjService.isValidCNPJ(contaRequest.getCnpj())) {
             throw new CnpjException();
         }
-        if (contaRequest.getCnpj() != null && empresaCnpjExist(contaRequest.getCnpj()) && !contaRequest.getCnpj().equals(cnpj)) {
+        if (empresaCnpjExist(contaRequest.getCnpj()) && !contaRequest.getCnpj().equals(cnpj)) {
             throw new CnpjExistException();
         }
 
-        if (contaRequest.getEmail() != null && !emailService.isValidEmail(contaRequest.getEmail())) {
+        if (!emailService.isValidEmail(contaRequest.getEmail())) {
             throw new EmailException();
         }
         String empresaEmail = contaRepository.getEmpresaEmail(cnpj);
-        if (contaRequest.getEmail() != null && emailExist(contaRequest) && !contaRequest.getEmail().equals(empresaEmail)) {
+        if (emailExist(contaRequest) && !contaRequest.getEmail().equals(empresaEmail)) {
             throw new EmailExistException();
         }
 
-        if (contaRequest.getSenha() != null && !senhaService.isSenhaValid(contaRequest.getSenha())) {
+        if (!senhaService.isSenhaValid(contaRequest.getSenha())) {
             throw new SenhaException();
         }
     }
@@ -239,7 +250,7 @@ public class ContaService {
 
         return ContaEmpresaResponse.builder()
                 .nome(contaEmpresaSalva.getNome())
-           //        .senha(contaEmpresaSalva.getSenha())
+                //        .senha(contaEmpresaSalva.getSenha())
                 .email(contaEmpresaSalva.getEmail())
                 //  .tipoConta(contaEmpresaSalva.getTipoConta())
                 // .cnpj(contaEmpresaSalva.getCnpj())
@@ -252,8 +263,7 @@ public class ContaService {
 
 
     public List<ContaClienteResponse> getAllClienteList() {
-        if (contaRepository.getAllClienteList()==null)
-        {
+        if (contaRepository.getAllClienteList() == null) {
             throw new NullPointerException("Não há clientes");
         }
 
@@ -271,6 +281,7 @@ public class ContaService {
     }
 
     public ContaClienteResponse updateContaCliente(ContaRequest contaRequest, String cpf) {
+
         contaClienteCheckUpdateRequest(contaRequest, cpf);
 
         ContaClienteEntity contaSalva = contaRepository.getClienteInfo(cpf);
@@ -285,10 +296,9 @@ public class ContaService {
     }
 
     public List<ContaEmpresaResponse> getAllEmpresaList() {
-      if (contaRepository.getAllEmpresaList()==null)
-      {
-          throw new NullPointerException("Não há empresas");
-      }
+        if (contaRepository.getAllEmpresaList() == null) {
+            throw new NullPointerException("Não há empresas");
+        }
         return contaRepository.getAllEmpresaList();
     }
 

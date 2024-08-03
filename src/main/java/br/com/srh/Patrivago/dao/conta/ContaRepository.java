@@ -208,13 +208,13 @@ public class ContaRepository {
     }
 
     public String getClienteEmail(String cpf) {
-        String sql=("SELECT email FROM conta INNER JOIN conta_cliente ON conta.id_conta = conta_cliente.id_conta_cliente WHERE cpf = ?");
+        String sql=("SELECT email FROM conta INNER JOIN conta_cliente ON conta.id_conta = conta_cliente.id_conta WHERE cpf = ?");
         return jdbcTemplate.queryForObject(sql, String.class,cpf);
 
     }
 
     public String getEmpresaEmail(String cnpj) {
-        String sql=("SELECT email FROM conta INNER JOIN conta_empresa ON conta.id_conta = conta_empresa.id_conta_empresa WHERE cnpj = ?");
+        String sql=("SELECT email FROM conta INNER JOIN conta_empresa ON conta.id_conta = conta_empresa.id_conta WHERE cnpj = ?");
         return jdbcTemplate.queryForObject(sql, String.class,cnpj);
 
     }

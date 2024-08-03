@@ -23,8 +23,8 @@ public class EnderecoRepository {
         String sqlIdHotel= ("SELECT id_hotel FROM hotel where nome = ? AND hotel_email = ?");
        Long idHotel = jdbcTemplate.queryForObject(sqlIdHotel,Long.class,hotelRequest.getNome(),hotelRequest.getHotelEmail());
 
-        String sql =("INSERT INTO endereco (cep,rua,numero,uf,id_hotel) VALUES (?,?,?,?,?)");
-        jdbcTemplate.update(sql,endereco.getCep(),endereco.getRua(),endereco.getNumero(),endereco.getUf(),idHotel);
+        String sql =("INSERT INTO endereco (cep,rua,numero,cidade,uf,id_hotel) VALUES (?,?,?,?,?,?)");
+        jdbcTemplate.update(sql,endereco.getCep(),endereco.getRua(),endereco.getNumero(),endereco.getCidade(),endereco.getUf(),idHotel);
         return endereco;
 
     }
