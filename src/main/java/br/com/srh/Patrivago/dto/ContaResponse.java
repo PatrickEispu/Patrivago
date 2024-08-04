@@ -1,9 +1,6 @@
 package br.com.srh.Patrivago.dto;
 
 
-import br.com.srh.Patrivago.enuns.TipoContaEnum;
-import br.com.srh.Patrivago.model.conta.ContaClienteEntity;
-import br.com.srh.Patrivago.model.conta.ContaEmpresaEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -15,7 +12,7 @@ public class ContaResponse {
     private Long idConta;
     private String nome;
     private String email;
-    private Integer fkIdTipoConta;
+    private Integer idTipoConta;
 //    private String cnpj;
 //    private String cpf;
 //    private String senha;

@@ -18,6 +18,8 @@ public class ErrorMessage {
     public static final String RESERVA_VAZIA = "Os Campos de CHECKIN e/ou CHECKOUT não foram preenchidos.";
     public static final String RESERVA_INVALIDA = "RESERVA solicitada inválida.";
     public static final String RESERVA_INEXISTENTE = "RESERVA não existe.";
+    public static final String RESERVA_DIAS_LIMITE = "A reserva excede o limite de dias permitido (é permitido fazer uma reserva de no máximo 20 dias.)";
+    public static final String RESERVA_MESES_LIMITE = "A reserva excede o limite máximo do período de antecedência permitido (é permitido fazer uma reserva com até 8 meses de antecedência" ;
     public static final String HOTEL_OCUPADO = "O hotel está com lotação máxima.";
     public static final String HOTEL_NAO_ENCONTRADO = "Nenhum Hotel foi encontrado.";
     public static final String HOTEL_UPDATE_NEGADO = "Update NEGADO! Não é possível alterar informações dos quartos enquanto houver reservas em andamento.";
@@ -28,7 +30,6 @@ public class ErrorMessage {
     public static final String CHECKOUT_JA_ATIVADO = "Esta reserva já está com o checkout ativado.";
     public static final String DATA_INVALIDA = "Data informada não é valida (checkin/checkout não podem ser anteriores a data atual).";
     public static final String DATA_FORMATO_INCORRETO = "DATA com formato incorreto. Seguir padrao(dd/MM/yyyy).";
-    public static final String RESERVA_LIMIT = "A reserva excede o limite permitido (É permitido fazer uma reserva de no máximo 20 dias.)";
     public static final String CAMPO_VAZIO = "A requisição possui um campo vazio.";
     public static final String CEP_INVALIDO = "CEP informado é inválido.";
     public static final String CEP_INEXISTENTE = "Nenhum endereço encontrado com o CEP fornecido.";

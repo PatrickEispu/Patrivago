@@ -10,9 +10,12 @@ import br.com.srh.Patrivago.util.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -33,8 +36,6 @@ public class ReservaService {
         reservaCheckRequest(reservaRequest, cpf);
 
         ReservaEntity reserva = ReservaEntity.builder()
-                .nomeHotel(reservaRequest.getNomeHotel())
-                .nomeCliente(reservaRequest.getNomeCliente())
                 .hotelEmail(reservaRequest.getHotelEmail())
                 .checkIn(reservaRequest.getCheckIn())
                 .checkOut(reservaRequest.getCheckOut())
@@ -55,29 +56,33 @@ public class ReservaService {
         if (!contaService.clienteCpfExist(cpf)) {
             throw new CpfDontExistException();
         }
-        if (!hotelService.hotelExist(reservaRequest.getNomeHotel())) {
-            throw new HotelDontExistException();
-        }
-        if (emailService.isValidEmail(reservaRequest.getHotelEmail())) {
+//        if (!hotelService.hotelExist(reservaRequest.getNomeHotel())) {
+//            throw new HotelDontExistException();
+//        }
+        if (!emailService.isValidEmail(reservaRequest.getHotelEmail())) {
             throw new EmailException();
         }
         if (!hotelService.hotelEmailExist(reservaRequest.getHotelEmail())) {
             throw new EmailDontExist();
         }
-        if (!hotelService.hotelEmailCheck(reservaRequest.getHotelEmail(), reservaRequest.getNomeHotel())) {
-            throw new HotelWrongEmailExcpetion();
-        }
+//        if (!hotelService.hotelEmailCheck(reservaRequest.getHotelEmail(), reservaRequest.getNomeHotel())) {
+//            throw new HotelWrongEmailExcpetion();
+//        }
         if (!dateCorrectFormat(reservaRequest.getCheckIn(), reservaRequest.getCheckOut())) {
             throw new IncorretDateFormatException();
         }
-        if (!checkDataIsAfterToday(reservaRequest.getCheckIn(), reservaRequest.getCheckOut())) {
+        if (checkDataIsBeforeToday(reservaRequest.getCheckIn(), reservaRequest.getCheckOut())) {
             throw new DataInvalidaException();
         }
         if (!checkDataIsValid(reservaRequest.getCheckIn(), reservaRequest.getCheckOut())) {
             throw new ReservaInvalidaException();
         }
-        if (reservaLimit(reservaRequest.getCheckIn(), reservaRequest.getCheckOut())) {
-            throw new ReservaLimitException();
+        if (reservaDayLimit(reservaRequest.getCheckIn(), reservaRequest.getCheckOut())) {
+            throw new ReservaDayLimitException();
+        }
+        if(reservaMonthLimit(reservaRequest.getCheckIn()))
+        {
+            throw new ReservaMonthLimitException();
         }
         if(!hotelService.quartoDisponivelCheck(reservaRequest.getHotelEmail()))
         {
@@ -85,32 +90,46 @@ public class ReservaService {
         }
     }
 
+    private boolean reservaMonthLimit(String checkInStr) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate checkin = LocalDate.parse(checkInStr,dtf);
+        LocalDate limit = LocalDate.now().plusMonths(8);
+        return checkin.isAfter(limit);
+    }
+
     private boolean dateCorrectFormat(String checkInStr, String checkOutStr) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
         try {
             LocalDate checkin = LocalDate.parse(checkInStr, dtf);
             LocalDate checkout = LocalDate.parse(checkOutStr, dtf);
             return true;
-        } catch (IncorretDateFormatException e) {
+        }
+        catch (DateTimeParseException e)
+        {
             return false;
         }
+
+
+
     }
 
-    private boolean reservaLimit(String checkInStr, String checkOutStr) {
+    private boolean reservaDayLimit(String checkInStr, String checkOutStr) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         LocalDate checkin = LocalDate.parse(checkInStr, dtf);
         LocalDate checkout = LocalDate.parse(checkOutStr, dtf);
-        Integer daysCount = Period.between(checkin, checkout).getDays();
+        Long daysCount = ChronoUnit.DAYS.between(checkin,checkout);
+        System.out.println(daysCount);
         return daysCount > 20;
     }
 
-    private boolean checkDataIsAfterToday(String checkinStr, String checkoutStr) {
+    private boolean checkDataIsBeforeToday(String checkinStr, String checkoutStr) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         LocalDate checkinDate = LocalDate.parse(checkinStr, dtf);
         LocalDate checkoutDate = LocalDate.parse(checkoutStr, dtf);
-        return !checkinDate.isBefore(LocalDate.now()) || !checkoutDate.isBefore(LocalDate.now());
+        return checkinDate.isBefore(LocalDate.now()) || checkoutDate.isBefore(LocalDate.now());
 
     }
 
@@ -126,11 +145,24 @@ public class ReservaService {
     }
 
     public List<ReservaResponse> geClienteReserva(String cpf) {
+        if (!cpfService.isValidCPF(cpf))
+        {
+            throw new CpfException();
+        }
+        if (!contaService.clienteCpfExist(cpf))
+        {
+            throw new CpfDontExistException();
+        }
+
         Long idCliente = contaService.getIdCliente(cpf);
         return reservaRepository.getClienteReserva(idCliente);
     }
 
     public List<ReservaResponse> getHotelReserva(Long idHotel) {
+      if (!hotelService.hotelIdExist(idHotel))
+      {
+          throw new HotelDontExistException();
+      }
         return reservaRepository.getHotelReserva(idHotel);
     }
 
@@ -166,14 +198,18 @@ public class ReservaService {
         if (!dateCorrectFormat(reservaRequest.getCheckIn(), reservaRequest.getCheckOut())) {
             throw new IncorretDateFormatException();
         }
-        if (!checkDataIsAfterToday(reservaRequest.getCheckIn(), reservaRequest.getCheckOut())) {
+        if (checkDataIsBeforeToday(reservaRequest.getCheckIn(), reservaRequest.getCheckOut())) {
             throw new DataInvalidaException();
         }
         if (!checkDataIsValid(reservaRequest.getCheckIn(), reservaRequest.getCheckOut())) {
             throw new ReservaInvalidaException();
         }
-        if (reservaLimit(reservaRequest.getCheckIn(), reservaRequest.getCheckOut())) {
-            throw new ReservaLimitException();
+        if (reservaDayLimit(reservaRequest.getCheckIn(), reservaRequest.getCheckOut())) {
+            throw new ReservaDayLimitException();
+        }
+        if(reservaMonthLimit(reservaRequest.getCheckIn()))
+        {
+            throw new ReservaMonthLimitException();
         }
 
     }

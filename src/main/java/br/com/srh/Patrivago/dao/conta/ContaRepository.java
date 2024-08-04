@@ -2,7 +2,6 @@ package br.com.srh.Patrivago.dao.conta;
 
 import br.com.srh.Patrivago.dto.ContaClienteResponse;
 import br.com.srh.Patrivago.dto.ContaEmpresaResponse;
-import br.com.srh.Patrivago.dto.ContaRequest;
 import br.com.srh.Patrivago.dto.ContaResponse;
 import br.com.srh.Patrivago.model.conta.ContaClienteEntity;
 import br.com.srh.Patrivago.model.conta.ContaEmpresaEntity;
@@ -50,7 +49,7 @@ public class ContaRepository {
             conta.setIdConta(rs.getLong("id_conta"));
             conta.setNome(rs.getString("nome"));
             conta.setEmail(rs.getString("email"));
-            conta.setFkIdTipoConta(rs.getInt("id_tipo_conta"));
+            conta.setIdTipoConta(rs.getInt("id_tipo_conta"));
             return conta;
         });
     }
@@ -67,7 +66,7 @@ public class ContaRepository {
             contaCliente.setIdContaCliente(rs.getLong("id_conta_cliente"));
             contaCliente.setNome(rs.getString("nome"));
             contaCliente.setEmail(rs.getString("email"));
-            contaCliente.setFkIdTipoConta(rs.getInt("id_tipo_conta"));
+            contaCliente.setIdTipoConta(rs.getInt("id_tipo_conta"));
             contaCliente.setCpf(rs.getString("cpf"));
             return contaCliente;
         });
@@ -83,7 +82,7 @@ public class ContaRepository {
             contaCliente.setIdContaCliente(rs.getLong("id_conta_cliente"));
             contaCliente.setNome(rs.getString("nome"));
             contaCliente.setEmail(rs.getString("email"));
-            contaCliente.setFkIdTipoConta(rs.getInt("id_tipo_conta"));
+            contaCliente.setIdTipoConta(rs.getInt("id_tipo_conta"));
             contaCliente.setCpf(rs.getString("cpf"));
             return contaCliente;
         }, cpf);
@@ -121,7 +120,7 @@ public class ContaRepository {
             contaEmpresa.setNome(rs.getString("nome"));
             contaEmpresa.setEmail(rs.getString("email"));
             contaEmpresa.setCnpj(rs.getString("cnpj"));
-            contaEmpresa.setFkIdTipoConta(rs.getInt("id_tipo_conta"));
+            contaEmpresa.setIdTipoConta(rs.getInt("id_tipo_conta"));
             return contaEmpresa;
         });
     }
@@ -136,7 +135,7 @@ public class ContaRepository {
             contaEmpresa.setNome(rs.getString("nome"));
             contaEmpresa.setEmail(rs.getString("email"));
             contaEmpresa.setCnpj(rs.getString("cnpj"));
-            contaEmpresa.setFkIdTipoConta(rs.getInt("id_tipo_conta"));
+            contaEmpresa.setIdTipoConta(rs.getInt("id_tipo_conta"));
             return contaEmpresa;
         }, cnpj);
     }

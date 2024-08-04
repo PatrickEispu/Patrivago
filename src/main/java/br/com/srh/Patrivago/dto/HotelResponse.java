@@ -18,5 +18,5 @@ public class HotelResponse {
    // private ContaEntity conta;
     private EnderecoEntity endereco;
     private String hotelEmail;
-    private Long fkIdContaEmpresa;
+    private Long idContaEmpresa;
 }

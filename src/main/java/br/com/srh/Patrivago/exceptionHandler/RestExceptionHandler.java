@@ -96,9 +96,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     private ResponseEntity<String> reservaInvalidaHandler(ReservaInvalidaException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorMessage.RESERVA_INVALIDA);
     }
-    @ExceptionHandler(ReservaLimitException.class)
-    private ResponseEntity<String> reservaLimitHandler(ReservaLimitException exception) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorMessage.RESERVA_LIMIT);
+    @ExceptionHandler(ReservaDayLimitException.class)
+    private ResponseEntity<String> reservaLimitHandler(ReservaDayLimitException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorMessage.RESERVA_DIAS_LIMITE);
     }
     @ExceptionHandler(SenhaException.class)
     private ResponseEntity<String> senhaLimitHandler(SenhaException exception) {
@@ -123,5 +123,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(HotelMismatchExcpetion.class)
     private ResponseEntity<String> hotelMismatchHandler(HotelMismatchExcpetion exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorMessage.HOTEL_INCORRETO);
+    }
+    @ExceptionHandler(ReservaMonthLimitException.class)
+    private ResponseEntity<String> reservaMonthLimitHandler(ReservaMonthLimitException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorMessage.RESERVA_MESES_LIMITE);
     }
 }

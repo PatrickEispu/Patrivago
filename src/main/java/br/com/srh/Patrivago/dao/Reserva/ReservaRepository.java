@@ -1,5 +1,7 @@
 package br.com.srh.Patrivago.dao.Reserva;
 
+import br.com.srh.Patrivago.dto.ContaClienteResponse;
+import br.com.srh.Patrivago.dto.HotelResponse;
 import br.com.srh.Patrivago.dto.ReservaResponse;
 import br.com.srh.Patrivago.model.reserva.ReservaEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,39 +18,47 @@ public class ReservaRepository {
     JdbcTemplate jdbcTemplate;
 
     public ReservaEntity saveReserva(ReservaEntity reserva, String cpf) {
-        try {
 
-            String sqlIdCliente = ("SELECT id_conta_cliente from conta_cliente WHERE cpf = ?");
-            Long idCLiente = jdbcTemplate.queryForObject(sqlIdCliente, Long.class, cpf);
-            String sqlIdHotel = ("SELECT id_hotel FROM hotel WHERE nome = ? AND hotel_email = ?");
-            Long idHotel = jdbcTemplate.queryForObject(sqlIdHotel, Long.class, reserva.getNomeHotel(), reserva.getHotelEmail());
-            String sql = ("INSERT INTO reserva" +
-                    "(nome_hotel," +
-                    "hotel_email," +
-                    "nome_cliente," +
-                    "check_in," +
-                    "check_out," +
-                    "id_conta_cliente," +
-                    "id_hotel)" +
-                    "id_reserva_status," +
-                    " VALUES(?,?,?,?,?,?,?,?)");
+        //    String sqlIdCliente = ("SELECT id_conta_cliente from conta_cliente WHERE cpf = ?");
+        //Long idCLiente = jdbcTemplate.queryForObject(sqlIdCliente, Long.class, cpf);
 
-            jdbcTemplate.update(sql,
-                    reserva.getNomeHotel(),
-                    reserva.getHotelEmail(),
-                    reserva.getNomeCliente(),
-                    reserva.getCheckIn(),
-                    reserva.getCheckOut(),
-                    idCLiente,
-                    idHotel,
-                    1);
+        String sqlCliente = ("SELECT * FROM conta_cliente INNER JOIN conta ON conta_cliente.id_conta = conta.id_conta WHERE cpf = ?");
+
+        ContaClienteResponse clienteResponse = jdbcTemplate.queryForObject(sqlCliente,
+                new BeanPropertyRowMapper<>(ContaClienteResponse.class),
+                cpf);
+
+//            String sqlIdHotel = ("SELECT id_hotel FROM hotel WHERE hotel_email = ?");
+//            Long idHotel = jdbcTemplate.queryForObject(sqlIdHotel, Long.class, reserva.getHotelEmail());
+
+        String sqlHotel = ("SELECT * FROM hotel WHERE hotel_email = ?");
+
+        HotelResponse hotelResponse = jdbcTemplate.queryForObject(sqlHotel,
+                new BeanPropertyRowMapper<>(HotelResponse.class),
+                reserva.getHotelEmail());
+
+        String sql = ("INSERT INTO reserva" +
+                "(nome_hotel," +
+                "hotel_email," +
+                "nome_cliente," +
+                "check_in," +
+                "check_out," +
+                "id_conta_cliente," +
+                "id_hotel," +
+                "id_reserva_status)" +
+                " VALUES(?,?,?,?,?,?,?,?)");
+
+        jdbcTemplate.update(sql,
+                hotelResponse.getNome(),
+                reserva.getHotelEmail(),
+                clienteResponse.getNome(),
+                reserva.getCheckIn(),
+                reserva.getCheckOut(),
+                clienteResponse.getIdContaCliente(),
+                hotelResponse.getIdHotel(),
+                1);
 
 
-          //  System.out.println("Reserva feita com sucesso");
-
-        } catch (Exception e) {
-         //   System.out.println("Erro ao realizar a reserva " + e);
-        }
         return reserva;
     }
 
@@ -139,12 +149,12 @@ public class ReservaRepository {
     }
 
     public Integer checkinAtivadoVerify(Long idReserva) {
-        String sql=("SELECT id_reserva_status FROM reserva WHERE id_reserva = ?");
-        return jdbcTemplate.queryForObject(sql, Integer.class,idReserva);
+        String sql = ("SELECT id_reserva_status FROM reserva WHERE id_reserva = ?");
+        return jdbcTemplate.queryForObject(sql, Integer.class, idReserva);
     }
 
     public Integer reservaExist(Long idReserva) {
-        String sql=("SELECT COUNT(*) FROM reserva WHERE id_reserva = ?");
-        return jdbcTemplate.queryForObject(sql,Integer.class,idReserva);
+        String sql = ("SELECT COUNT(*) FROM reserva WHERE id_reserva = ?");
+        return jdbcTemplate.queryForObject(sql, Integer.class, idReserva);
     }
 }

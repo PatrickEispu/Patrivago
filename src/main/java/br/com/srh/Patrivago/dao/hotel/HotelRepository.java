@@ -48,7 +48,7 @@ public class HotelRepository {
             hotel.setHotelEmail(rs.getString("hotel_email"));
             hotel.setQtdeQuarto(rs.getInt("qtde_quarto"));
             hotel.setQtdeQuartoDisponivel(rs.getInt("qtde_quarto_disponivel"));
-            hotel.setFkIdContaEmpresa(rs.getLong("id_conta_empresa"));
+            hotel.setIdContaEmpresa(rs.getLong("id_conta_empresa"));
             return hotel;
         });
     }
@@ -66,7 +66,7 @@ public class HotelRepository {
             hotel.setHotelEmail(rs.getString("hotel_email"));
             hotel.setQtdeQuarto(rs.getInt("qtde_quarto"));
             hotel.setQtdeQuartoDisponivel(rs.getInt("qtde_quarto_disponivel"));
-            hotel.setFkIdContaEmpresa(rs.getLong("id_conta_empresa"));
+            hotel.setIdContaEmpresa(rs.getLong("id_conta_empresa"));
 
             EnderecoEntity endereco = new EnderecoEntity();
             endereco.setIdEndereco(rs.getLong("id_endereco"));
@@ -155,8 +155,11 @@ public class HotelRepository {
     }
 
     public void clearRoom(Long idReserva) {
-        String sql=("UPDATE hotel SET qtde_quarto_disponivel = qtde_quarto_disponivel+1  WHERE id_reserva = ?");
-        jdbcTemplate.update(sql,idReserva);
+        String sqlReserva=("SELECT hotel_email FROM reserva WHERE id_reserva = ?");
+        String hotelEmail = jdbcTemplate.queryForObject(sqlReserva, String.class,idReserva);
+
+        String sql=("UPDATE hotel SET qtde_quarto_disponivel = qtde_quarto_disponivel+1  WHERE hotel_email = ?");
+        jdbcTemplate.update(sql,hotelEmail);
     }
 
     public Integer getQtdeQuartos(Long idHotel) {
@@ -183,5 +186,11 @@ public class HotelRepository {
                 "WHERE id_hotel = ? AND cnpj = ?");
 
         return jdbcTemplate.queryForObject(sql, Integer.class,idHotel,cnpj);
+    }
+
+    public Integer getHotelId(Long idHotel) {
+        String sql=("SELECT COUNT(*) FROM hotel WHERE id_hotel = ?");
+        return jdbcTemplate.queryForObject(sql, Integer.class,idHotel);
+
     }
 }
