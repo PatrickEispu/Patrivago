@@ -1,27 +1,58 @@
-Patrivago
+# Patrivago
 
-Descrição do Projeto: Patrivago é um projeto com fins educacionais sobre uma plataforma de reservas de hotéis, onde usuários podem criar contas para fazer reservas em diversos hotéis. Empresas também podem criar contas para anunciar seus hotéis na plataforma.
+# Descrição
+O Patrivago é uma aplicação desenvolvida para gerenciar reservas de hotéis. A aplicação fornece funcionalidades para criação, atualização e consulta de contas de clientes, empresas, reservas e hotéis.
 
-Funcionalidades:
+Estrutura do Projeto
+A estrutura do projeto é a seguinte:
+Patrivago/
+├── .git/                    # Diretório de controle de versão
+├── .idea/                   # Arquivos de configuração do IntelliJ IDEA
+├── .mvn/                    # Arquivos de configuração do Maven
+├── src/                     # Código fonte da aplicação
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── br/
+│   │   │       └── com/
+│   │   │           └── srh/
+│   │   │               └── Patrivago/
+│   │   │                   ├── constante/
+│   │   │                   ├── controller/
+│   │   │                   ├── dao/
+│   │   │                   ├── model/
+│   │   │                   ├── usecase/
+│   │   │                   └── util/
+│   │   └── resources/       # Arquivos de configuração e recursos da aplicação
+│   └── test/                # Testes unitários e de integração
+├── target/                  # Arquivos gerados durante o build
+├── .gitignore               # Arquivo de configuração do Git para ignorar arquivos/diretórios específicos
+└── pom.xml                  # Arquivo de configuração do Maven
 
-Para Clientes:
-Cadastro de conta.
-Escolha de hotéis de interesse.
-Realização de reservas nos hotéis escolhidos.
-Para Empresas:
-Cadastro de conta empresarial.
-Adição de hotéis vinculados à conta empresarial.
-Informações detalhadas sobre cada hotel.
-Tecnologias Utilizadas:
+# Funcionalidades
+Conta: Gerenciamento de contas de clientes e empresas.
+Hotel: Gerenciamento de informações de hotéis.
+Reserva: Gerenciamento de reservas em hotéis.
+Utilidades: Serviços auxiliares como validação de CPF, CNPJ, email, etc.
 
-Linguagem: Java
+# Pré-requisitos
+Java 11 ou superior
+Maven 3.6.3 ou superior
 
-IDE: IntelliJ
-
-Java 17,
-Maven,
-Spring,
-Lombok,
-JDBC.
-
-Autor: Patrick Eispu Simões
+# Como executar
+1. Clone o repositório:
+   git clone https://github.com/seu-usuario/Patrivago.git
+2. Navegue até o diretório do projeto
+   cd Patrivago
+3. Compile o projeto utilizando o Maven:
+   mvn clean install
+4. Execute a aplicação
+   mvn spring-boot:run
+  # Contribuição
+1.Faça um fork do repositório
+2. Crie uma branch para sua feature (git checkout -b feature/AmazingFeature)
+3. Faça commit das suas alterações (git commit -m 'Add some AmazingFeature')
+4. Faça push para a branch (git push origin feature/AmazingFeature)
+5. Abra um Pull Request
+# Licença
+Distribuído sob a licença MIT. Veja LICENSE para mais informações.
+   
