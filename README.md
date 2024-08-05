@@ -1,13 +1,17 @@
-# Patrivago
+## Patrivago
 
-# Descrição
+## Descrição
 O Patrivago é uma aplicação desenvolvida para gerenciar reservas de hotéis. A aplicação fornece funcionalidades para criação, atualização e consulta de contas de clientes, empresas, reservas e hotéis.
 
-Estrutura do Projeto
+## Estrutura do Projeto
 A estrutura do projeto é a seguinte:
 Patrivago/
 
-`├── .git/                    # Diretório de controle de versão
+```A estrutura do projeto é a seguinte:
+
+ 
+Patrivago/
+├── .git/                    # Diretório de controle de versão
 ├── .idea/                   # Arquivos de configuração do IntelliJ IDEA
 ├── .mvn/                    # Arquivos de configuração do Maven
 ├── src/                     # Código fonte da aplicação
@@ -27,19 +31,19 @@ Patrivago/
 │   └── test/                # Testes unitários e de integração
 ├── target/                  # Arquivos gerados durante o build
 ├── .gitignore               # Arquivo de configuração do Git para ignorar arquivos/diretórios específicos
-└── pom.xml                  # Arquivo de configuração do Maven`
-
-# Funcionalidades
+└── pom.xml                  # Arquivo de configuração do Maven 
+```
+## Funcionalidades
 Conta: Gerenciamento de contas de clientes e empresas.
 Hotel: Gerenciamento de informações de hotéis.
 Reserva: Gerenciamento de reservas em hotéis.
 Utilidades: Serviços auxiliares como validação de CPF, CNPJ, email, etc.
 
-# Pré-requisitos
+## Pré-requisitos
 Java 11 ou superior
 Maven 3.6.3 ou superior
 
-# Como executar
+## Como executar
 1. Clone o repositório:
    `git clone https://github.com/seu-usuario/Patrivago.git`
 2. Navegue até o diretório do projeto
