@@ -41,16 +41,14 @@ Utilidades: Serviços auxiliares como validação de CPF, CNPJ, email, etc.
 
 ## Tecnologias Utilizadas
 
-- **Java 11**: Linguagem de programação utilizada no desenvolvimento da aplicação.
+- **Java 17**: Linguagem de programação utilizada no desenvolvimento da aplicação.
 - **Spring Boot**: Framework para simplificar a criação de aplicações baseadas em Spring.
 - **Maven**: Ferramenta de automação de compilação utilizada para gerenciar dependências e build.
-- **Hibernate**: Framework de mapeamento objeto-relacional (ORM) para facilitar a persistência de dados.
-- **H2 Database**: Banco de dados em memória utilizado para testes e desenvolvimento.
-- **JUnit**: Framework de testes para garantir a qualidade do código.
+- **Postgre Database**: Banco de dados em memória utilizado para testes e desenvolvimento.
 - **IntelliJ IDEA**: Ambiente de desenvolvimento integrado (IDE) utilizado no desenvolvimento do projeto.
 
 ## Pré-requisitos
-Java 11 ou superior
+Java 17 ou superior
 Maven 3.6.3 ou superior
 
 ## Como executar
