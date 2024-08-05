@@ -163,7 +163,7 @@ public class HotelRepository {
     }
 
     public Integer getQtdeQuartos(Long idHotel) {
-        String sql=("SELECT qtde_quartos FROM hotel WHERE id_hotel = ?");
+        String sql=("SELECT qtde_quarto FROM hotel WHERE id_hotel = ?");
         return jdbcTemplate.queryForObject(sql, Integer.class,idHotel);
     }
 

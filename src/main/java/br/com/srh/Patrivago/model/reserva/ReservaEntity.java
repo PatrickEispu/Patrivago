@@ -19,4 +19,5 @@ public class ReservaEntity implements Serializable {
     private ContaEntity conta;
     private String hotelEmail;
     private Integer idReservaStatus;
+    private Integer idReservaOrder;
 }

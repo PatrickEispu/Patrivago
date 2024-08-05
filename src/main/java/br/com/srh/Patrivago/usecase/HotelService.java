@@ -28,7 +28,6 @@ public class HotelService {
     EmailService emailService;
 
 
-//TODO verificar erro de endereco
 
     public HotelResponse addHotel(HotelRequest hotelRequest, String cnpj) {
         hotelRequestNullCheck(hotelRequest);
@@ -61,6 +60,10 @@ public class HotelService {
         }
         if (hotelEmailExist(hotelRequest.getHotelEmail())) {
             throw new EmailExistException();
+        }
+        if (hotelRequest.getQtdeQuarto()<1)
+        {
+            throw new HotelRoomException();
         }
 
 

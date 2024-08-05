@@ -76,7 +76,7 @@ public class ContaService {
                 .senha(contaRequest.getSenha())
                 .email(contaRequest.getEmail())
                 .tipoConta(contaRequest.getTipoConta())
-                .cpf(contaRequest.getCpf())
+                .cpf(cpfService.converteCpf(contaRequest.getCpf()))
                 .build();
 
         ContaClienteEntity contaClienteSalva = contaRepository.saveCliente(contaCliente);
@@ -226,7 +226,7 @@ public class ContaService {
                 .senha(contaRequest.getSenha())
                 .email(contaRequest.getEmail())
                 .tipoConta(contaRequest.getTipoConta())
-                .cnpj(contaRequest.getCnpj())
+                .cnpj(cnpjService.converteCnpj(contaRequest.getCnpj()))
                 .build();
 
         ContaEmpresaEntity contaEmpresaSalva = contaRepository.saveEmpresa(contaEmpresa);

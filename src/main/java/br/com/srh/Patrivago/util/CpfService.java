@@ -56,4 +56,8 @@ public class CpfService {
         // Verificar se os dígitos verificadores estão corretos
         return digits[9] == firstVerifier && digits[10] == secondVerifier;
     }
+
+    public String converteCpf(String cpf) {
+        return  cpf = cpf.replaceAll("[^\\d]", "");
+    }
 }

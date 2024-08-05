@@ -128,4 +128,12 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     private ResponseEntity<String> reservaMonthLimitHandler(ReservaMonthLimitException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorMessage.RESERVA_MESES_LIMITE);
     }
+    @ExceptionHandler(HotelRoomException.class)
+    private ResponseEntity<String> hotelRoomHandler(HotelRoomException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorMessage.HOTEL_QUARTO_INVALIDO);
+    }
+    @ExceptionHandler(ReservaFinalizadaException.class)
+    private ResponseEntity<String> reservaFinalizadaHandler(ReservaFinalizadaException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorMessage.RESERVA_FINALIZADA);
+    }
 }

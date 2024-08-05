@@ -80,19 +80,17 @@ public class ReservaService {
         if (reservaDayLimit(reservaRequest.getCheckIn(), reservaRequest.getCheckOut())) {
             throw new ReservaDayLimitException();
         }
-        if(reservaMonthLimit(reservaRequest.getCheckIn()))
-        {
+        if (reservaMonthLimit(reservaRequest.getCheckIn())) {
             throw new ReservaMonthLimitException();
         }
-        if(!hotelService.quartoDisponivelCheck(reservaRequest.getHotelEmail()))
-        {
+        if (!hotelService.quartoDisponivelCheck(reservaRequest.getHotelEmail())) {
             throw new HotelOcupadoException();
         }
     }
 
     private boolean reservaMonthLimit(String checkInStr) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate checkin = LocalDate.parse(checkInStr,dtf);
+        LocalDate checkin = LocalDate.parse(checkInStr, dtf);
         LocalDate limit = LocalDate.now().plusMonths(8);
         return checkin.isAfter(limit);
     }
@@ -104,12 +102,9 @@ public class ReservaService {
             LocalDate checkin = LocalDate.parse(checkInStr, dtf);
             LocalDate checkout = LocalDate.parse(checkOutStr, dtf);
             return true;
-        }
-        catch (DateTimeParseException e)
-        {
+        } catch (DateTimeParseException e) {
             return false;
         }
-
 
 
     }
@@ -119,7 +114,7 @@ public class ReservaService {
 
         LocalDate checkin = LocalDate.parse(checkInStr, dtf);
         LocalDate checkout = LocalDate.parse(checkOutStr, dtf);
-        Long daysCount = ChronoUnit.DAYS.between(checkin,checkout);
+        Long daysCount = ChronoUnit.DAYS.between(checkin, checkout);
         System.out.println(daysCount);
         return daysCount > 20;
     }
@@ -145,12 +140,10 @@ public class ReservaService {
     }
 
     public List<ReservaResponse> geClienteReserva(String cpf) {
-        if (!cpfService.isValidCPF(cpf))
-        {
+        if (!cpfService.isValidCPF(cpf)) {
             throw new CpfException();
         }
-        if (!contaService.clienteCpfExist(cpf))
-        {
+        if (!contaService.clienteCpfExist(cpf)) {
             throw new CpfDontExistException();
         }
 
@@ -159,15 +152,14 @@ public class ReservaService {
     }
 
     public List<ReservaResponse> getHotelReserva(Long idHotel) {
-      if (!hotelService.hotelIdExist(idHotel))
-      {
-          throw new HotelDontExistException();
-      }
+        if (!hotelService.hotelIdExist(idHotel)) {
+            throw new HotelDontExistException();
+        }
         return reservaRepository.getHotelReserva(idHotel);
     }
 
     public ReservaResponse updateReserva(ReservaRequest reservaRequest, String cpf, Long idReserva) {
-        reservaUpdateCheckRequest(reservaRequest,cpf,idReserva);
+        reservaUpdateCheckRequest(reservaRequest, cpf, idReserva);
 
         Long idCliente = contaService.getIdCliente(cpf);
 
@@ -188,8 +180,7 @@ public class ReservaService {
         if (!contaService.clienteCpfExist(cpf)) {
             throw new CpfDontExistException();
         }
-        if (!reservaExist(idReserva))
-        {
+        if (!reservaExist(idReserva)) {
             throw new ReservaDontExistException();
         }
         if (reservaStatusAlreadyCheck(idReserva)) {
@@ -207,8 +198,7 @@ public class ReservaService {
         if (reservaDayLimit(reservaRequest.getCheckIn(), reservaRequest.getCheckOut())) {
             throw new ReservaDayLimitException();
         }
-        if(reservaMonthLimit(reservaRequest.getCheckIn()))
-        {
+        if (reservaMonthLimit(reservaRequest.getCheckIn())) {
             throw new ReservaMonthLimitException();
         }
 
@@ -233,11 +223,23 @@ public class ReservaService {
         if (!checkin(idReserva)) {
             throw new CheckinException();
         }
+        if (reservaFinalizada(idReserva)) {
+            throw new ReservaFinalizadaException();
+        }
         ReservaEntity reservaSalva = reservaRepository.getReservaInfo(idReserva);
         reservaSalva.setIdReservaStatus(2);
 
         ReservaEntity reservaAtualizada = reservaRepository.ativarCheckin(idReserva, reservaSalva);
         return mapearReserva(reservaAtualizada);
+    }
+
+    private boolean reservaFinalizada(Long idReserva) {
+        Integer reservaOrder = reservaRepository.reservaFinalizada(idReserva);
+        if (reservaOrder == 2) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public ReservaResponse ativarCheckout(Long idReserva) {
@@ -252,7 +254,7 @@ public class ReservaService {
         }
         ReservaEntity reservaSalva = reservaRepository.getReservaInfo(idReserva);
         reservaSalva.setIdReservaStatus(1);
-
+        reservaSalva.setIdReservaOrder(2);
         hotelService.clearRoom(idReserva);
 
         ReservaEntity reservaAtualizada = reservaRepository.ativarCheckOut(idReserva, reservaSalva);

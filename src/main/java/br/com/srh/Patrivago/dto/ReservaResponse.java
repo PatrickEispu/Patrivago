@@ -21,4 +21,5 @@ public class ReservaResponse {
     private String checkOut;
     private String hotelEmail;
     private Integer idReservaStatus;
+    private Integer idReservaOrder;
 }

@@ -19,8 +19,6 @@ public class ReservaRepository {
 
     public ReservaEntity saveReserva(ReservaEntity reserva, String cpf) {
 
-        //    String sqlIdCliente = ("SELECT id_conta_cliente from conta_cliente WHERE cpf = ?");
-        //Long idCLiente = jdbcTemplate.queryForObject(sqlIdCliente, Long.class, cpf);
 
         String sqlCliente = ("SELECT * FROM conta_cliente INNER JOIN conta ON conta_cliente.id_conta = conta.id_conta WHERE cpf = ?");
 
@@ -28,8 +26,6 @@ public class ReservaRepository {
                 new BeanPropertyRowMapper<>(ContaClienteResponse.class),
                 cpf);
 
-//            String sqlIdHotel = ("SELECT id_hotel FROM hotel WHERE hotel_email = ?");
-//            Long idHotel = jdbcTemplate.queryForObject(sqlIdHotel, Long.class, reserva.getHotelEmail());
 
         String sqlHotel = ("SELECT * FROM hotel WHERE hotel_email = ?");
 
@@ -45,8 +41,9 @@ public class ReservaRepository {
                 "check_out," +
                 "id_conta_cliente," +
                 "id_hotel," +
-                "id_reserva_status)" +
-                " VALUES(?,?,?,?,?,?,?,?)");
+                "id_reserva_status," +
+                "id_reserva_order)"+
+                " VALUES(?,?,?,?,?,?,?,?,?)");
 
         jdbcTemplate.update(sql,
                 hotelResponse.getNome(),
@@ -56,6 +53,7 @@ public class ReservaRepository {
                 reserva.getCheckOut(),
                 clienteResponse.getIdContaCliente(),
                 hotelResponse.getIdHotel(),
+                1,
                 1);
 
 
@@ -75,6 +73,7 @@ public class ReservaRepository {
             reserva.setCheckIn(rs.getString("check_in"));
             reserva.setCheckOut(rs.getString("check_out"));
             reserva.setIdReservaStatus(rs.getInt("id_reserva_status"));
+            reserva.setIdReservaOrder(rs.getInt("id_reserva_order"));
             return reserva;
         }, idCliente);
     }
@@ -92,6 +91,7 @@ public class ReservaRepository {
             reserva.setCheckIn(rs.getString("check_in"));
             reserva.setCheckOut(rs.getString("check_out"));
             reserva.setIdReservaStatus(rs.getInt("id_reserva_status"));
+            reserva.setIdReservaOrder(rs.getInt("id_reserva_order"));
             return reserva;
         }), idHotel);
     }
@@ -131,8 +131,8 @@ public class ReservaRepository {
     }
 
     public ReservaEntity ativarCheckOut(Long idReserva, ReservaEntity reservaSalva) {
-        String sql = ("UPDATE reserva SET id_reserva_status = ? WHERE id_reserva = ?");
-        jdbcTemplate.update(sql, reservaSalva.getIdReservaStatus(), idReserva);
+        String sql = ("UPDATE reserva SET id_reserva_status = ?, id_reserva_order = ? WHERE id_reserva = ?");
+        jdbcTemplate.update(sql, reservaSalva.getIdReservaStatus(),reservaSalva.getIdReservaOrder(), idReserva);
         return reservaSalva;
 
     }
@@ -156,5 +156,10 @@ public class ReservaRepository {
     public Integer reservaExist(Long idReserva) {
         String sql = ("SELECT COUNT(*) FROM reserva WHERE id_reserva = ?");
         return jdbcTemplate.queryForObject(sql, Integer.class, idReserva);
+    }
+
+    public Integer reservaFinalizada(Long idReserva) {
+    String sql = ("SELECT id_reserva_order FROM reserva WHERE id_reserva = ?");
+    return jdbcTemplate.queryForObject(sql, Integer.class,idReserva);
     }
 }

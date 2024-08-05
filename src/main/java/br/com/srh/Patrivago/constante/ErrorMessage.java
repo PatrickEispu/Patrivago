@@ -20,10 +20,12 @@ public class ErrorMessage {
     public static final String RESERVA_INEXISTENTE = "RESERVA não existe.";
     public static final String RESERVA_DIAS_LIMITE = "A reserva excede o limite de dias permitido (é permitido fazer uma reserva de no máximo 20 dias.)";
     public static final String RESERVA_MESES_LIMITE = "A reserva excede o limite máximo do período de antecedência permitido (é permitido fazer uma reserva com até 8 meses de antecedência" ;
+    public static final String RESERVA_FINALIZADA ="Essa reserva já foi finalizada." ;
     public static final String HOTEL_OCUPADO = "O hotel está com lotação máxima.";
     public static final String HOTEL_NAO_ENCONTRADO = "Nenhum Hotel foi encontrado.";
     public static final String HOTEL_UPDATE_NEGADO = "Update NEGADO! Não é possível alterar informações dos quartos enquanto houver reservas em andamento.";
     public static final String HOTEL_INCORRETO ="Este hotel não está vinculado a esta conta." ;
+    public static final String HOTEL_QUARTO_INVALIDO = "A requisição de quarto é inválida";
     public static final String CHECKIN_INVALIDO = "O check-in não pode ser feito nesta data.";
     public static final String CHECKIN_JA_ATIVADO = "Esta reserva já está com o checkin ativado.";
     public static final String CHECKOUT_INVALIDO = "O check-out não pode ser feito nesta data.";
