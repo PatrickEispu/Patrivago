@@ -7,7 +7,7 @@ Estrutura do Projeto
 A estrutura do projeto é a seguinte:
 Patrivago/
 
-├── .git/                    # Diretório de controle de versão
+`├── .git/                    # Diretório de controle de versão
 ├── .idea/                   # Arquivos de configuração do IntelliJ IDEA
 ├── .mvn/                    # Arquivos de configuração do Maven
 ├── src/                     # Código fonte da aplicação
@@ -27,7 +27,7 @@ Patrivago/
 │   └── test/                # Testes unitários e de integração
 ├── target/                  # Arquivos gerados durante o build
 ├── .gitignore               # Arquivo de configuração do Git para ignorar arquivos/diretórios específicos
-└── pom.xml                  # Arquivo de configuração do Maven
+└── pom.xml                  # Arquivo de configuração do Maven`
 
 # Funcionalidades
 Conta: Gerenciamento de contas de clientes e empresas.
@@ -41,13 +41,13 @@ Maven 3.6.3 ou superior
 
 # Como executar
 1. Clone o repositório:
-   git clone https://github.com/seu-usuario/Patrivago.git
+   `git clone https://github.com/seu-usuario/Patrivago.git`
 2. Navegue até o diretório do projeto
-   cd Patrivago
+   `cd Patrivago`
 3. Compile o projeto utilizando o Maven:
-   mvn clean install
+  `mvn clean install`
 4. Execute a aplicação
-   mvn spring-boot:run
+  `mvn spring-boot:run`
   # Contribuição
 1.Faça um fork do repositório
 2. Crie uma branch para sua feature (git checkout -b feature/AmazingFeature)
