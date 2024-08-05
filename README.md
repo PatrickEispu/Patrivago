@@ -6,6 +6,7 @@ O Patrivago é uma aplicação desenvolvida para gerenciar reservas de hotéis. 
 Estrutura do Projeto
 A estrutura do projeto é a seguinte:
 Patrivago/
+
 ├── .git/                    # Diretório de controle de versão
 ├── .idea/                   # Arquivos de configuração do IntelliJ IDEA
 ├── .mvn/                    # Arquivos de configuração do Maven
