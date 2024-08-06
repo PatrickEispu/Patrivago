@@ -154,7 +154,7 @@ public class ContaRepository {
         Long idConta = jdbcTemplate.queryForObject(sqlIdConta,Long.class,cnpj);
 
         String sql=("UPDATE conta SET nome = ?, email = ?, senha = ? WHERE id_conta = ? ");
-        jdbcTemplate.update(sql,contaSalva.getNome(),contaSalva.getEmail(),contaSalva.getEmail(),idConta);
+        jdbcTemplate.update(sql,contaSalva.getNome(),contaSalva.getEmail(),contaSalva.getSenha(),idConta);
 
         String sqlContaEmpresa=("UPDATE conta_empresa SET cnpj = ? WHERE cnpj = ?");
         jdbcTemplate.update(sqlContaEmpresa,contaSalva.getCnpj(),cnpj);
